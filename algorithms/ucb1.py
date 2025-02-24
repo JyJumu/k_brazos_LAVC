@@ -26,7 +26,7 @@ class UCB1(Algorithm):
         :param c: Parámetro de ajuste de exploración.
         :raises ValueError: Si epsilon no está en [0, 1].
         """
-        assert 0 < c < 1, "El parámetro alfa debe estar entre 0 y 1."
+        assert 0 < c < 1, "El parámetro c debe estar entre 0 y 1."
 
         super().__init__(k)
         self.c = c
