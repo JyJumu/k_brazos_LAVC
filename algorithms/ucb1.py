@@ -18,33 +18,34 @@ from algorithms.algorithm import Algorithm
 
 class UCB1(Algorithm):
 
-    def __init__(self, k: int, alfa: float = 0.1):
+    def __init__(self, k: int, c: float = 0.1):
         """
         Inicializa el algoritmo UCB.
 
         :param k: Número de brazos.
-        :param epsilon: Probabilidad de exploración (seleccionar un brazo al azar).
+        :param c: Parámetro de ajuste de exploración.
         :raises ValueError: Si epsilon no está en [0, 1].
         """
-        assert 0 < alfa < 1, "El parámetro alfa debe estar entre 0 y 1."
+        assert 0 < c < 1, "El parámetro alfa debe estar entre 0 y 1."
 
         super().__init__(k)
-        self.alfa = alfa
-        self.uas: np.ndarray = np.zeros(k, dtype=float) 
+        self.c = c
+        self.uas: np.ndarray = np.zeros(k, dtype=float)
+        self.ucbs: np.ndarray = np.zeros(k, dtype=float)
 
-    def select_arm(self) -> int:
+    def select_arm(self, t: int) -> int:
         """
         Selecciona un brazo basado en la política UCB1.
+        :param t: instante de tiempo en el que nos encontramos
         :return: índice del brazo seleccionado.
         """
 
+        for i in range(self.k):
+            self.uas[i] = np.sqrt(2 * np.log(t+1) / self.counts[i])
         
-        
-        if np.random.random() < self.epsilon:
-            # Selecciona un brazo al azar
-            chosen_arm = np.random.choice(self.k)
-        else:
-            # Selecciona el brazo con la recompensa promedio estimada más alta
-            chosen_arm = np.argmax(self.values)
+        for i in range(self.k):
+            self.ucbs[i] = self.values[i] + self.c * self.uas[i]
+
+        chosen_arm = np.argmax(self.ucbs)
 
         return chosen_arm
