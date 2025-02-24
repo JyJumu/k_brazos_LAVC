@@ -1,6 +1,6 @@
 """
 Module: algorithms/ucb1.py
-Description: Implementación del algoritmo epsilon-greedy para el problema de los k-brazos.
+Description: Implementación del algoritmo ucb1 para el problema de los k-brazos.
 
 Author: Jesús Verdú Chacón & Jorge López Abad
 Email: jesus.v.c@um.es & jorge.lopeza@um.es
