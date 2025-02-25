@@ -34,7 +34,7 @@ class UCB2(Algorithm):
         self.ucbs: np.ndarray = np.zeros(k, dtype=float)
         self.kas: np.darray = np.zeros(k, dtype=int)
 
-    def tau(ka: int) -> int:
+    def tau(self, ka: int) -> int:
         return math.ceil((1 + self.alfa)**ka)
 
     def select_arm(self, t: int) -> int:
