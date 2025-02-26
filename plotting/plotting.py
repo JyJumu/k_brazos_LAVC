@@ -128,9 +128,9 @@ algorithms: List[Algorithm], k, *args):
         label = get_algorithm_label(algo)
         plt.plot(range(k), arm_stats[idx], label=label, linewidth=2)
 
-    plt.xlabel("Pasos de tiempo")
-    plt.ylabel("Porcentaje de selecciones óptimas (%)")
-    plt.title("Porcentaje de Selección del Brazo Óptimo vs Pasos de Tiempo")
+    plt.xlabel("Brazos del bandido")
+    plt.ylabel("Ganancia obtenida")
+    plt.title("Ganancia obtenida por cada brazo")
     plt.legend()
     plt.grid()
     plt.show()
