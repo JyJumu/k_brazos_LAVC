@@ -56,4 +56,14 @@ class UCB2(Algorithm):
         self.kas[chosen_arm] += 1
         
         return chosen_arm, num_veces
+
+    def reset(self):
+        """
+        Reinicia el estado del algoritmo (opcional).
+        """
+        self.counts = np.zeros(self.k, dtype=int)
+        self.values = np.zeros(self.k, dtype=float)
+        self.uas = np.zeros(k, dtype=float)
+        self.ucbs = np.zeros(k, dtype=float)
+        self.kas = np.zeros(k, dtype=int)
         
