@@ -18,7 +18,7 @@ from algorithms.algorithm import Algorithm
 
 class UCB1(Algorithm):
 
-    def __init__(self, k: int, c: float = 0.1):
+    def __init__(self, k: int, c: float = 1):
         """
         Inicializa el algoritmo UCB.
 
