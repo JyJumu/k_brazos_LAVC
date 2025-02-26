@@ -24,7 +24,7 @@ class UCB1(Algorithm):
 
         :param k: Número de brazos.
         :param c: Parámetro de ajuste de exploración.
-        :raises ValueError: Si epsilon no está en [0, 1].
+        :raises ValueError: Si c no está en [0, 1].
         """
         assert 0 <= c <= 1, "El parámetro c debe estar entre 0 y 1."
 
