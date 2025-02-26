@@ -37,7 +37,7 @@ class UCB2(Algorithm):
     def tau(self, ka: int) -> int:
         return math.ceil((1 + self.alfa)**ka)
 
-    def select_arm(self, t: int) -> int:
+    def select_arm(self, t: int) -> int, int:
         """
         Selecciona un brazo basado en la política UCB1.
         :param t: instante de tiempo en el que nos encontramos
@@ -51,8 +51,9 @@ class UCB2(Algorithm):
             self.ucbs[i] = self.values[i] + self.uas[i]
 
         chosen_arm = np.argmax(self.ucbs)
-
-        return chosen_arm
+        num_veces = self.tau(self.kas[chosen_arm] + 1) - self.tau(self.kas[chosen_arm])
+        
+        return chosen_arm, num_veces
 
     def update(self, chosen_arm: int, reward: float):
         num_veces = self.tau(self.kas[chosen_arm] + 1) - self.tau(self.kas[chosen_arm])
