@@ -20,7 +20,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from algorithms import Algorithm, EpsilonGreedy
+from algorithms import Algorithm, EpsilonGreedy, UCB1, UCB2
 
 
 def get_algorithm_label(algo: Algorithm) -> str:
@@ -65,7 +65,6 @@ def plot_average_rewards(steps: int, rewards: np.ndarray, algorithms: List[Algor
     plt.tight_layout()
     plt.show()
 
-
 def plot_optimal_selections(steps: int, optimal_selections: np.ndarray, algorithms: List[Algorithm]):
     """
     Genera la gráfica de Porcentaje de Selección del Brazo Óptimo vs Pasos de Tiempo.
@@ -75,4 +74,74 @@ def plot_optimal_selections(steps: int, optimal_selections: np.ndarray, algorith
     :param algorithms: Lista de instancias de algoritmos comparados.
     """
 
-    raise NotImplementedError("Esta función aún no ha sido implementada.")
+    plt.figure(figsize=(10, 6))
+
+    for idx, algo in enumerate(algorithms):
+        if isinstance(algo, EpsilonGreedy):
+            plt.plot(range(steps), optimal_selections[idx], label=f"{algo.__class__.__name__} (ε={algo.epsilon})")
+        elif isinstance(algo, UCB1):
+            plt.plot(range(steps), optimal_selections[idx], label=f"{algo.__class__.__name__} (c={algo.c})")
+        elif isinstance(algo, UCB2):
+            plt.plot(range(steps), optimal_selections[idx], label=f"{algo.__class__.__name__} (α={algo.alfa})")
+
+    plt.xlabel("Pasos de tiempo")
+    plt.ylabel("Porcentaje de selecciones óptimas (%)")
+    plt.title("Porcentaje de Selección del Brazo Óptimo vs Pasos de Tiempo")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+def plot_regret(steps: int,
+regret_accumulated: np.ndarray,
+algorithms: List[Algorithm], *args):
+    """
+    Genera la gráfica de Regret Acumulado vs Pasos de Tiempo
+    :param steps: Número de pasos de tiempo.
+    :param regret_accumulated: Matriz de regret acumulado (algoritmos x pasos).
+    :param algorithms: Lista de instancias de algoritmos comparados.
+    :param args: Opcional. Parámetros que consideres. P.e. la cota teórica Cte * ln(T).
+    """
+
+    plt.figure(figsize=(10, 6))
+
+    for idx, algo in enumerate(algorithms):
+        if isinstance(algo, EpsilonGreedy):
+            plt.plot(range(steps), regret_accumulated[idx], label=f"{algo.__class__.__name__} (ε={algo.epsilon})")
+        elif isinstance(algo, UCB1):
+            plt.plot(range(steps), regret_accumulated[idx], label=f"{algo.__class__.__name__} (c={algo.c})")
+        elif isinstance(algo, UCB2):
+            plt.plot(range(steps), regret_accumulated[idx], label=f"{algo.__class__.__name__} (α={algo.alfa})")
+
+    plt.xlabel("Pasos de tiempo")
+    plt.ylabel("Arrepentimiento acumulado")
+    plt.title("Arrepentimiento acumulado vs Pasos de Tiempo")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+def plot_arm_statistics(arm_stats: np.ndarray,
+algorithms: List[Algorithm], k, *args):
+    """
+    Genera gráficas separadas de Selección de Arms:
+    Ganancias vs Pérdidas para cada algoritmo.
+    :param arm_stats: Lista (de diccionarios) con estadísticas de cada brazo por algoritmo.
+    :param algorithms: Lista de instancias de algoritmos comparados.
+    :param args: Opcional. Parámetros que consideres
+    """
+
+    plt.figure(figsize=(10, 6))
+
+    for idx, algo in enumerate(algorithms):
+        if isinstance(algo, EpsilonGreedy):
+            plt.plot(range(k), arm_stats[idx], label=f"{algo.__class__.__name__} (ε={algo.epsilon})")
+        elif isinstance(algo, UCB1):
+            plt.plot(range(k), arm_stats[idx], label=f"{algo.__class__.__name__} (c={algo.c})")
+        elif isinstance(algo, UCB2):
+            plt.plot(range(k), arm_stats[idx], label=f"{algo.__class__.__name__} (α={algo.alfa})")
+
+    plt.xlabel("Pasos de tiempo")
+    plt.ylabel("Porcentaje de selecciones óptimas (%)")
+    plt.title("Porcentaje de Selección del Brazo Óptimo vs Pasos de Tiempo")
+    plt.legend()
+    plt.grid()
+    plt.show()
