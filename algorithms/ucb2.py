@@ -59,6 +59,5 @@ class UCB2(Algorithm):
         for i in range(num_veces):
             super().update(chosen_arm, reward)
 
-        self.taus[chosen_arm] = 1 + (1 + self.alfa)**self.kas[chosen_arm]
         self.kas[chosen_arm] += 1
         
