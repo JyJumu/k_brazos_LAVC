@@ -39,7 +39,6 @@ def get_algorithm_label(algo: Algorithm) -> str:
         label += f" (c={algo.c})"
     elif isinstance(algo, UCB2):
         label += f" (α={algo.alfa})"
-        Añadir más condiciones para otros algoritmos aquí
     else:
         raise ValueError("El algoritmo debe ser de la clase Algorithm o una subclase.")
     return label
