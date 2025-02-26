@@ -52,12 +52,12 @@ class UCB2(Algorithm):
             self.ucbs[i] = self.values[i] + self.uas[i]
 
         chosen_arm = np.argmax(self.ucbs)
-        num_veces = maht.ceil(self.tau(self.kas[chosen_arm] + 1) - self.tau(self.kas[chosen_arm]))
+        num_veces = math.ceil(self.tau(self.kas[chosen_arm] + 1) - self.tau(self.kas[chosen_arm]))
         
         return chosen_arm, num_veces
 
     def update(self, chosen_arm: int, reward: float):
-        num_veces = maht.ceil(self.tau(self.kas[chosen_arm] + 1) - self.tau(self.kas[chosen_arm]))
+        num_veces = math.ceil(self.tau(self.kas[chosen_arm] + 1) - self.tau(self.kas[chosen_arm]))
         for i in range(num_veces):
             super().update(chosen_arm, reward)
 
