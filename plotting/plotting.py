@@ -35,9 +35,11 @@ def get_algorithm_label(algo: Algorithm) -> str:
     label = type(algo).__name__
     if isinstance(algo, EpsilonGreedy):
         label += f" (epsilon={algo.epsilon})"
-    # elif isinstance(algo, OtroAlgoritmo):
-    #     label += f" (parametro={algo.parametro})"
-    # Añadir más condiciones para otros algoritmos aquí
+    elif isinstance(algo, UCB1):
+        label += f" (c={algo.c})"
+    elif isinstance(algo, UCB2):
+        label += f" (α={algo.alfa})"
+        Añadir más condiciones para otros algoritmos aquí
     else:
         raise ValueError("El algoritmo debe ser de la clase Algorithm o una subclase.")
     return label
@@ -77,12 +79,8 @@ def plot_optimal_selections(steps: int, optimal_selections: np.ndarray, algorith
     plt.figure(figsize=(10, 6))
 
     for idx, algo in enumerate(algorithms):
-        if isinstance(algo, EpsilonGreedy):
-            plt.plot(range(steps), optimal_selections[idx], label=f"{algo.__class__.__name__} (ε={algo.epsilon})")
-        elif isinstance(algo, UCB1):
-            plt.plot(range(steps), optimal_selections[idx], label=f"{algo.__class__.__name__} (c={algo.c})")
-        elif isinstance(algo, UCB2):
-            plt.plot(range(steps), optimal_selections[idx], label=f"{algo.__class__.__name__} (α={algo.alfa})")
+        label = get_algorithm_label(algo)
+        plt.plot(range(steps), optimal_selections[idx], label=label, linewidth=2)
 
     plt.xlabel("Pasos de tiempo")
     plt.ylabel("Porcentaje de selecciones óptimas (%)")
@@ -105,13 +103,9 @@ algorithms: List[Algorithm], *args):
     plt.figure(figsize=(10, 6))
 
     for idx, algo in enumerate(algorithms):
-        if isinstance(algo, EpsilonGreedy):
-            plt.plot(range(steps), regret_accumulated[idx], label=f"{algo.__class__.__name__} (ε={algo.epsilon})")
-        elif isinstance(algo, UCB1):
-            plt.plot(range(steps), regret_accumulated[idx], label=f"{algo.__class__.__name__} (c={algo.c})")
-        elif isinstance(algo, UCB2):
-            plt.plot(range(steps), regret_accumulated[idx], label=f"{algo.__class__.__name__} (α={algo.alfa})")
-
+        label = get_algorithm_label(algo)
+        plt.plot(range(steps), regret_accumulated[idx], label=label, linewidth=2)
+            
     plt.xlabel("Pasos de tiempo")
     plt.ylabel("Arrepentimiento acumulado")
     plt.title("Arrepentimiento acumulado vs Pasos de Tiempo")
@@ -130,14 +124,10 @@ algorithms: List[Algorithm], k, *args):
     """
 
     plt.figure(figsize=(10, 6))
-
+        
     for idx, algo in enumerate(algorithms):
-        if isinstance(algo, EpsilonGreedy):
-            plt.plot(range(k), arm_stats[idx], label=f"{algo.__class__.__name__} (ε={algo.epsilon})")
-        elif isinstance(algo, UCB1):
-            plt.plot(range(k), arm_stats[idx], label=f"{algo.__class__.__name__} (c={algo.c})")
-        elif isinstance(algo, UCB2):
-            plt.plot(range(k), arm_stats[idx], label=f"{algo.__class__.__name__} (α={algo.alfa})")
+        label = get_algorithm_label(algo)
+        plt.plot(range(k), arm_stats[idx], label=label, linewidth=2)
 
     plt.xlabel("Pasos de tiempo")
     plt.ylabel("Porcentaje de selecciones óptimas (%)")
