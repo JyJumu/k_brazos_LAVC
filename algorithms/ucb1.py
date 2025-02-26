@@ -40,6 +40,11 @@ class UCB1(Algorithm):
         :return: índice del brazo seleccionado.
         """
 
+        # Primero seleccionamos todos los brazos para tener las recompensas
+        for i in range(self.k):
+            if self.counts[i] == 0:
+                return i
+        
         for i in range(self.k):
             self.uas[i] = np.sqrt(2 * np.log(t+1) / self.counts[i])
         
