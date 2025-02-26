@@ -46,7 +46,7 @@ class UCB2(Algorithm):
 
         for i in range(self.k):
             valor_tau = math.ceil(self.tau(self.kas[i]))
-            self.uas[i] = np.sqrt((1 + self.alfa) * np.log(math.e * t / valor_tau) / (2 * valor_tau))
+            self.uas[i] = np.sqrt(((1 + self.alfa) * np.log(math.e * t / valor_tau)) / (2 * valor_tau))
         
         for i in range(self.k):
             self.ucbs[i] = self.values[i] + self.uas[i]
