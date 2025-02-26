@@ -37,7 +37,7 @@ class UCB2(Algorithm):
     def tau(self, ka: int) -> float:
         return (1 + self.alfa)**ka
 
-    def select_arm(self, t: int) -> int, int:
+    def select_arm(self, t: int) -> (int, int):
         """
         Selecciona un brazo basado en la política UCB1.
         :param t: instante de tiempo en el que nos encontramos
