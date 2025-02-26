@@ -24,7 +24,7 @@ class UCB2(Algorithm):
 
         :param k: Número de brazos.
         :param alfa: Parámetro de ajuste entre exploración y explotación.
-        :raises ValueError: Si epsilon no está en [0, 1].
+        :raises ValueError: Si alfa no está en (0, 1).
         """
         assert 0 < alfa < 1, "El parámetro alfa debe estar entre 0 y 1."
 
