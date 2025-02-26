@@ -34,8 +34,8 @@ class UCB2(Algorithm):
         self.ucbs: np.ndarray = np.zeros(k, dtype=float)
         self.kas: np.darray = np.zeros(k, dtype=int)
 
-    def tau(self, ka: int) -> int:
-        return math.ceil((1 + self.alfa)**ka)
+    def tau(self, ka: int) -> float:
+        return (1 + self.alfa)**ka
 
     def select_arm(self, t: int) -> int, int:
         """
@@ -45,13 +45,14 @@ class UCB2(Algorithm):
         """
 
         for i in range(self.k):
-            self.uas[i] = np.sqrt((1 + self.alfa) * np.log(math.e * t / self.tau(self.kas[i])) / 2 * self.tau(self.kas[i]))
+            valor_tau = math.ceil(self.tau(self.kas[i]))
+            self.uas[i] = np.sqrt((1 + self.alfa) * np.log(math.e * t / valor_tau) / 2 * valor_tau)
         
         for i in range(self.k):
             self.ucbs[i] = self.values[i] + self.uas[i]
 
         chosen_arm = np.argmax(self.ucbs)
-        num_veces = self.tau(self.kas[chosen_arm] + 1) - self.tau(self.kas[chosen_arm])
+        num_veces = maht.ceil(self.tau(self.kas[chosen_arm] + 1) - self.tau(self.kas[chosen_arm]))
         
         return chosen_arm, num_veces
 
