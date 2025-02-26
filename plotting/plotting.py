@@ -115,8 +115,7 @@ algorithms: List[Algorithm], *args):
 def plot_arm_statistics(arm_stats: np.ndarray,
 algorithms: List[Algorithm], k, *args):
     """
-    Genera gráficas separadas de Selección de Arms:
-    Ganancias vs Pérdidas para cada algoritmo.
+    Genera una gráfica mostrando la ganancia obtenida para cada brazo.
     :param arm_stats: Lista (de diccionarios) con estadísticas de cada brazo por algoritmo.
     :param algorithms: Lista de instancias de algoritmos comparados.
     :param args: Opcional. Parámetros que consideres
@@ -131,6 +130,29 @@ algorithms: List[Algorithm], k, *args):
     plt.xlabel("Brazos del bandido")
     plt.ylabel("Ganancia obtenida")
     plt.title("Ganancia obtenida por cada brazo")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+def plot_arm_num_choices(num_choices_arm: np.ndarray,
+                        algorithms: List[Algorithm], k, *args):
+    """
+    Genera una gráfica mostrando el número de elecciones de cada brazo.
+    :param num_choices_arm: Lista que contiene el número de elecciones de cada brazo
+    por algoritmo.
+    :param algorithms: Lista de instancias de algoritmos comparados.
+    :param args: Opcional. Parámetros que consideres
+    """
+
+    plt.figure(figsize=(10, 6))
+        
+    for idx, algo in enumerate(algorithms):
+        label = get_algorithm_label(algo)
+        plt.plot(range(k), num_choices_arm[idx], label=label, linewidth=2)
+
+    plt.xlabel("Brazos del bandido")
+    plt.ylabel("Número de elecciones")
+    plt.title("Número de elecciones por cada brazo")
     plt.legend()
     plt.grid()
     plt.show()
