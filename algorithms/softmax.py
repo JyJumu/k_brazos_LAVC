@@ -38,15 +38,11 @@ class Softmax(Algorithm):
         :return: índice del brazo seleccionado.
         """
 
-        prob = np.zeros(self.k, dtype=float)
-        denominador = 0
-        for i in range(self.k):
-            denominador = math.e**( self.values[i] / self.tau)
-            
-        for i in range(self.k):
-            prob[i] = (math.e **(self.values[i] / self.tau)) / denominador
-
-        chosen_arm = np.random.choice(range(k), size=1, p=prob)
+        numerador = np.exp(self.values / self.tau)
+        denominador = np.sum(numerador)
+        prob = numerador / denominador
+        
+        chosen_arm = np.random.choice(self.k, p=prob)
         chosen_arm = sum(chosen_arm)
 
         return chosen_arm
