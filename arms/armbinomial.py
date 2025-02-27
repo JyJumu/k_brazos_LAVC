@@ -78,7 +78,7 @@ class ArmBinomial(Arm):
         for _ in range(k):
             n = np.random.randint(n_min, n_max + 1)
             n = round(n, 2)
-            p = np.random().rand()
+            p = np.random.rand()
             p = round(p, 2)
             arms.append(ArmBinomial(n,p))
 
