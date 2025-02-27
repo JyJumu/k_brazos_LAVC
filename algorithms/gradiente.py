@@ -19,7 +19,7 @@ from algorithms.algorithm import Algorithm
 
 class Gradiente(Algorithm):
 
-    def __init__(self, k: int, tau: float, alpha: float):
+    def __init__(self, k: int, alfa: float):
         """
         Inicializa el algoritmo UCB.
 
