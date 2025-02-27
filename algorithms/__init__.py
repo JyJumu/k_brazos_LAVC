@@ -18,6 +18,7 @@ from .epsilon_greedy import EpsilonGreedy
 from .ucb1 import UCB1
 from .ucb2 import UCB2
 from .softmax import Softmax
+from .gradiente import Gradiente
 
 # Lista de módulos o clases públicas
-__all__ = ['Algorithm', 'EpsilonGreedy', 'UCB1', 'UCB2', 'Softmax']
+__all__ = ['Algorithm', 'EpsilonGreedy', 'UCB1', 'UCB2', 'Softmax', 'Gradiente']
