@@ -38,7 +38,11 @@ class ArmBernoulli(Arm):
 
         :return: Recompensa obtenida del brazo.
         """
-        reward = np.random.normal(self.mu, self.sigma)
+        prob = np.random().rand()
+        if prob < p:
+          reward = 1
+        else:
+          reward = 0
         return reward
 
     def get_expected_value(self) -> float:
@@ -47,11 +51,7 @@ class ArmBernoulli(Arm):
 
         :return: Valor esperado de la distribución.
         """
-        prob = np.random().rand()
-        if prob < p:
-          return 1
-        else:
-          return 0
+        return p
 
     def __str__(self):
         """
@@ -59,31 +59,27 @@ class ArmBernoulli(Arm):
 
         :return: Descripción detallada del brazo normal.
         """
-        return f"ArmNormal(mu={self.mu}, sigma={self.sigma})"
+        return f"ArmBernoulli(p={self.p})"
 
     @classmethod
-    def generate_arms(cls, k: int, mu_min: float = 1, mu_max: float = 10.0):
+    def generate_arms(cls, k: int):
         """
-        Genera k brazos con medias únicas en el rango [mu_min, mu_max].
+        Genera k brazos con probabilidades p únicas.
 
         :param k: Número de brazos a generar.
-        :param mu_min: Valor mínimo de la media.
-        :param mu_max: Valor máximo de la media.
         :return: Lista de brazos generados.
         """
         assert k > 0, "El número de brazos k debe ser mayor que 0."
-        assert mu_min < mu_max, "El valor de mu_min debe ser menor que mu_max."
 
-        # Generar k- valores únicos de mu con decimales
-        mu_values = set()
+        # Generar k- valores únicos de p con decimales
+        p_values = set()
         while len(mu_values) < k:
-            mu = np.random.uniform(mu_min, mu_max)
-            mu = round(mu, 2)
-            mu_values.add(mu)
+            p = np.random().rand()
+            p = round(p, 2)
+            p_values.add(p)
+                
+        p_values = list(p_values)
 
-        mu_values = list(mu_values)
-        sigma = 1.0
-
-        arms = [ArmNormal(mu, sigma) for mu in mu_values]
+        arms = [ArmBernoulli(p) for p in p_values]
 
         return arms
