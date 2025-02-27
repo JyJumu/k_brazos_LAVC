@@ -20,29 +20,28 @@ import numpy as np
 from arms import Arm
 
 
-class ArmBernoulli(Arm):
-    def __init__(self, p: float):
+class ArmBinomial(Arm):
+    def __init__(self, n: int, p: float):
         """
-        Inicializa el brazo con distribución bernoulli.
+        Inicializa el brazo con distribución binomial.
 
+        :param n: Número de repeticiones del experimento
         :param p: Probabilidad de acierto.
         :param sigma: Desviación estándar de la distribución.
         """
+        assert 0 <= n, "El valor n debe ser mayor o igual que cero."
         assert 0 <= p <= 1, "La probabilidad p debe estar en el intervalo [0,1]."
-
+        
+        self.n = n
         self.p = p
 
     def pull(self):
         """
-        Genera una recompensa siguiendo una distribución normal.
+        Genera una recompensa siguiendo una distribución binomial.
 
         :return: Recompensa obtenida del brazo.
         """
-        prob = np.random().rand()
-        if prob < p:
-          reward = 1
-        else:
-          reward = 0
+        reward = np.random.binomial(self.n, self.p)
         return reward
 
     def get_expected_value(self) -> float:
@@ -51,7 +50,7 @@ class ArmBernoulli(Arm):
 
         :return: Valor esperado de la distribución.
         """
-        return p
+        return self.n*self.p
 
     def __str__(self):
         """
@@ -59,27 +58,28 @@ class ArmBernoulli(Arm):
 
         :return: Descripción detallada del brazo normal.
         """
-        return f"ArmBernoulli(p={self.p})"
+        return f"ArmBinomial(n={self.n}, p={self.p})"
 
     @classmethod
-    def generate_arms(cls, k: int):
+    def generate_arms(cls, k: int, n_min: int = 1, n_max: int = 10):
         """
         Genera k brazos con probabilidades p únicas.
 
         :param k: Número de brazos a generar.
+        :param n_min: Número mínimo de experimentos.
+        :param n_max: Número máximo de experimentos.
         :return: Lista de brazos generados.
         """
         assert k > 0, "El número de brazos k debe ser mayor que 0."
-
+        assert n_min < n_max, "El valor de n_min debe ser menor que n_max."
+        
         # Generar k- valores únicos de p con decimales
-        p_values = set()
-        while len(mu_values) < k:
+        arms = []
+        while len(n_values) < k:
+            n = np.random.randint(n_min, n_max + 1)
+            n = round(n, 2)
             p = np.random().rand()
             p = round(p, 2)
-            p_values.add(p)
-                
-        p_values = list(p_values)
-
-        arms = [ArmBernoulli(p) for p in p_values]
+            arms.append(ArmBinomial(n,p))
 
         return arms
