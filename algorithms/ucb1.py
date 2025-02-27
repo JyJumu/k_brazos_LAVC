@@ -54,3 +54,12 @@ class UCB1(Algorithm):
         chosen_arm = np.argmax(self.ucbs)
 
         return chosen_arm
+
+    def reset(self):
+        """
+        Reinicia el estado del algoritmo (opcional).
+        """
+        self.counts = np.zeros(self.k, dtype=int)
+        self.values = np.zeros(self.k, dtype=float)
+        self.uas = np.zeros(self.k, dtype=float)
+        self.ucbs = np.zeros(self.k, dtype=float)
