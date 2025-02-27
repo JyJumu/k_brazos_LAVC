@@ -38,11 +38,7 @@ class ArmBernoulli(Arm):
 
         :return: Recompensa obtenida del brazo.
         """
-        prob = np.random().rand()
-        if prob < p:
-          reward = 1
-        else:
-          reward = 0
+        reward = np.random.binomial(1, self.p)
         return reward
 
     def get_expected_value(self) -> float:
@@ -51,7 +47,7 @@ class ArmBernoulli(Arm):
 
         :return: Valor esperado de la distribución.
         """
-        return p
+        return self.p
 
     def __str__(self):
         """
