@@ -43,6 +43,5 @@ class Softmax(Algorithm):
         prob = numerador / denominador
         
         chosen_arm = np.random.choice(self.k, p=prob)
-        chosen_arm = sum(chosen_arm)
 
         return chosen_arm
