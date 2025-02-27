@@ -24,8 +24,8 @@ class Softmax(Algorithm):
         Inicializa el algoritmo UCB.
 
         :param k: Número de brazos.
-        :param tau: Parámetro de ajuste de exploración.
-        :raises ValueError: Si c no está en [0, 1].
+        :param tau: Parámetro del algoritmo.
+        :raises ValueError: Si tau no es mayor que 0.
         """
         assert 0 < tau, "El parámetro tau debe se mayor que 0."
 
