@@ -75,7 +75,7 @@ class ArmBinomial(Arm):
         
         # Generar k- valores únicos de p con decimales
         arms = []
-        while len(n_values) < k:
+        for _ in range(k):
             n = np.random.randint(n_min, n_max + 1)
             n = round(n, 2)
             p = np.random().rand()
