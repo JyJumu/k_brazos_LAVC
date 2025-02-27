@@ -13,44 +13,40 @@ For more details about GPL-3.0: https://www.gnu.org/licenses/gpl-3.0.html
 """
 
 import numpy as np
+import math
 
 from algorithms.algorithm import Algorithm
 
 class Softmax(Algorithm):
 
-    def __init__(self, k: int, c: float = 1):
+    def __init__(self, k: int, tau: float = 1):
         """
         Inicializa el algoritmo UCB.
 
         :param k: Número de brazos.
-        :param c: Parámetro de ajuste de exploración.
+        :param tau: Parámetro de ajuste de exploración.
         :raises ValueError: Si c no está en [0, 1].
         """
-        assert 0 <= c <= 1, "El parámetro c debe estar entre 0 y 1."
+        assert 0 < tau, "El parámetro tau debe se mayor que 0."
 
         super().__init__(k)
-        self.c = c
-        self.uas: np.ndarray = np.zeros(k, dtype=float)
-        self.ucbs: np.ndarray = np.zeros(k, dtype=float)
+        self.tau = tau
 
-    def select_arm(self, t: int) -> int:
+    def select_arm(self) -> int:
         """
-        Selecciona un brazo basado en la política UCB1.
-        :param t: instante de tiempo en el que nos encontramos
+        Selecciona un brazo basado en la política Softmax.
         :return: índice del brazo seleccionado.
         """
 
-        # Primero seleccionamos todos los brazos para tener las recompensas
+        prob = np.zeros(self.k, dtype=float)
+        denominador = 0
         for i in range(self.k):
-            if self.counts[i] == 0:
-                return i
-        
+            denominador = math.e**( self.values[i] / self.tau)
+            
         for i in range(self.k):
-            self.uas[i] = np.sqrt(2 * np.log(t+1) / self.counts[i])
-        
-        for i in range(self.k):
-            self.ucbs[i] = self.values[i] + self.c * self.uas[i]
+            prob[i] = (math.e **(self.values[i] / self.tau)) / denominador
 
-        chosen_arm = np.argmax(self.ucbs)
+        chosen_arm = np.random.choice(range(k), size=1, p=prob)
+        chosen_arm = sum(chosen_arm)
 
         return chosen_arm
