@@ -70,7 +70,7 @@ class ArmBernoulli(Arm):
         # Generar k- valores únicos de p con decimales
         p_values = set()
         while len(p_values) < k:
-            p = np.random().rand()
+            p = np.random.rand()
             p = round(p, 2)
             p_values.add(p)
                 
