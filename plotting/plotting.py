@@ -116,27 +116,42 @@ algorithms: List[Algorithm], *args):
     plt.grid()
     plt.show()
 
-def plot_arm_statistics(arm_stats: np.ndarray,
-algorithms: List[Algorithm], k, *args):
+def plot_arm_statistics(arm_stats: List[Dict],
+algorithms: List[Algorithm], k: int, optimal_arm: int, *args):
     """
-    Genera una gráfica mostrando la ganancia obtenida para cada brazo.
+    Genera gráficas separadas de Selección de Arms:
+    Ganancia obtenida por cada brazo por algoritmo.
+
     :param arm_stats: Lista (de diccionarios) con estadísticas de cada brazo por algoritmo.
     :param algorithms: Lista de instancias de algoritmos comparados.
+    :param k: Número de brazos.
     :param args: Opcional. Parámetros que consideres
     """
 
-    plt.figure(figsize=(10, 6))
-        
-    for idx, algo in enumerate(algorithms):
-        label = get_algorithm_label(algo)
-        plt.plot(range(1, k+1), arm_stats[idx], label=label, linewidth=2)
+    num_algorithms = len(algorithms)
 
-    plt.xlabel("Brazos del bandido")
-    plt.ylabel("Ganancia obtenida")
-    plt.title("Ganancia obtenida por cada brazo")
-    plt.legend()
-    plt.grid()
-    plt.show()
+    plt.figure(figsize=(10, 6))
+    width = 0.2
+    
+    for idx, algo in enumerate(algorithms):
+        plt.figure(figsize=(10, 6))
+        label = f"{algo.__class__.__name__} (ε={algo.epsilon})"
+        mean_rewards = arm_stats[idx]['mean_rewards']
+        selections = arm_stats[idx]['selections']
+        
+        x_positions = np.arange(1, k+1)
+        x_labels = [f"{i}\n({int(selections[i-1])} veces)" for i in range(1, k+1)]
+        
+        colors = ['green' if (i-1) == optimal_arm else 'blue' for i in x_positions]
+        
+        plt.bar(x_positions, mean_rewards, color=colors, alpha=0.7, edgecolor='black')
+        
+        plt.xlabel("Brazos del bandido (Número de selecciones entre paréntesis)")
+        plt.ylabel("Ganancia promedio")
+        plt.title(f"Ganancia promedio por brazo - {label}")
+        plt.xticks(x_positions, x_labels, rotation=45, ha='right')
+        plt.grid(axis='y', linestyle='--', alpha=0.7)
+        plt.show()
 
 def plot_arm_num_choices(num_choices_arm: np.ndarray,
                         algorithms: List[Algorithm], k, *args):
