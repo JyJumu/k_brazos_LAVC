@@ -21,6 +21,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 from algorithms import Algorithm, EpsilonGreedy, UCB1, UCB2, Softmax, Gradiente
+from typing import List, Dict
 
 
 def get_algorithm_label(algo: Algorithm) -> str:
@@ -135,7 +136,7 @@ algorithms: List[Algorithm], k: int, optimal_arm: int, *args):
     
     for idx, algo in enumerate(algorithms):
         plt.figure(figsize=(10, 6))
-        label = f"{algo.__class__.__name__} (ε={algo.epsilon})"
+        label = get_algorithm_label(algo)
         mean_rewards = arm_stats[idx]['mean_rewards']
         selections = arm_stats[idx]['selections']
         
