@@ -129,7 +129,7 @@ algorithms: List[Algorithm], k, *args):
         
     for idx, algo in enumerate(algorithms):
         label = get_algorithm_label(algo)
-        plt.plot(range(k), arm_stats[idx], label=label, linewidth=2)
+        plt.plot(range(1, k+1), arm_stats[idx], label=label, linewidth=2)
 
     plt.xlabel("Brazos del bandido")
     plt.ylabel("Ganancia obtenida")
