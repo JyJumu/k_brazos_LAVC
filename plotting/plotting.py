@@ -146,7 +146,7 @@ def plot_arm_statistics(arm_stats: List[Dict], algorithms: List, k: int, optimal
         colors = ['green' if (i - 1) == optimal_arm else 'blue' for i in x_positions]
         
         ax.bar(x_positions, mean_rewards, color=colors, alpha=0.7, edgecolor='black')
-        ax.set_xlabel("Brazos del bandido (Número de selecciones entre paréntesis)")
+        ax.set_xlabel("Brazos del bandido y nº de selecciones")
         ax.set_ylabel("Ganancia promedio")
         ax.set_title(f"Ganancia promedio por brazo - {label}")
         ax.set_xticks(x_positions)
