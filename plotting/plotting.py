@@ -117,42 +117,48 @@ algorithms: List[Algorithm], *args):
     plt.grid()
     plt.show()
 
-def plot_arm_statistics(arm_stats: List[Dict],
-algorithms: List[Algorithm], k: int, optimal_arm: int, *args):
+def plot_arm_statistics(arm_stats: List[Dict], algorithms: List, k: int, optimal_arm: int, *args):
     """
-    Genera gráficas separadas de Selección de Arms:
-    Ganancia obtenida por cada brazo por algoritmo.
+    Genera gráficas en un diseño de dos columnas mostrando la selección de brazos y
+    la ganancia obtenida por cada brazo por algoritmo.
 
     :param arm_stats: Lista (de diccionarios) con estadísticas de cada brazo por algoritmo.
     :param algorithms: Lista de instancias de algoritmos comparados.
     :param k: Número de brazos.
-    :param args: Opcional. Parámetros que consideres
+    :param optimal_arm: Índice del brazo óptimo.
     """
-
     num_algorithms = len(algorithms)
-
-    plt.figure(figsize=(10, 6))
-    width = 0.2
+    cols = 2  # Número de columnas en la cuadrícula
+    rows = (num_algorithms + 1) // cols  # Calculamos las filas necesarias
+    
+    fig, axes = plt.subplots(rows, cols, figsize=(12, 6 * rows))
+    axes = axes.flatten() if num_algorithms > 1 else [axes]
     
     for idx, algo in enumerate(algorithms):
-        plt.figure(figsize=(10, 6))
+        ax = axes[idx]
         label = get_algorithm_label(algo)
         mean_rewards = arm_stats[idx]['mean_rewards']
         selections = arm_stats[idx]['selections']
         
-        x_positions = np.arange(1, k+1)
-        x_labels = [f"{i}\n({int(selections[i-1])} veces)" for i in range(1, k+1)]
+        x_positions = np.arange(1, k + 1)
+        x_labels = [f"{i}\n({int(selections[i - 1])} veces)" for i in range(1, k + 1)]
         
-        colors = ['green' if (i-1) == optimal_arm else 'blue' for i in x_positions]
+        colors = ['green' if (i - 1) == optimal_arm else 'blue' for i in x_positions]
         
-        plt.bar(x_positions, mean_rewards, color=colors, alpha=0.7, edgecolor='black')
-        
-        plt.xlabel("Brazos del bandido (Número de selecciones entre paréntesis)")
-        plt.ylabel("Ganancia promedio")
-        plt.title(f"Ganancia promedio por brazo - {label}")
-        plt.xticks(x_positions, x_labels, rotation=45, ha='right')
-        plt.grid(axis='y', linestyle='--', alpha=0.7)
-        plt.show()
+        ax.bar(x_positions, mean_rewards, color=colors, alpha=0.7, edgecolor='black')
+        ax.set_xlabel("Brazos del bandido (Número de selecciones entre paréntesis)")
+        ax.set_ylabel("Ganancia promedio")
+        ax.set_title(f"Ganancia promedio por brazo - {label}")
+        ax.set_xticks(x_positions)
+        ax.set_xticklabels(x_labels, rotation=45, ha='right')
+        ax.grid(axis='y', linestyle='--', alpha=0.7)
+    
+    # Ocultar los ejes sobrantes si el número de algoritmos es impar
+    for idx in range(num_algorithms, len(axes)):
+        fig.delaxes(axes[idx])
+    
+    plt.tight_layout()
+    plt.show()
 
 def plot_arm_num_choices(num_choices_arm: np.ndarray,
                         algorithms: List[Algorithm], k, *args):
