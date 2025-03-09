@@ -13,12 +13,12 @@ For more details about GPL-3.0: https://www.gnu.org/licenses/gpl-3.0.html
 """
 
 # Importación de módulos o clases
-from .src.algorithm import Algorithm
-from .src.epsilon_greedy import EpsilonGreedy
-from .src.ucb1 import UCB1
-from .src.ucb2 import UCB2
-from .src.softmax import Softmax
-from .src.gradiente import Gradiente
+from .algorithm import Algorithm
+from .epsilon_greedy import EpsilonGreedy
+from .ucb1 import UCB1
+from .ucb2 import UCB2
+from .softmax import Softmax
+from .gradiente import Gradiente
 
 # Lista de módulos o clases públicas
 __all__ = ['Algorithm', 'EpsilonGreedy', 'UCB1', 'UCB2', 'Softmax', 'Gradiente']
