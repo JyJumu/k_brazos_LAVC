@@ -10,6 +10,6 @@ En este trabajo se ha realiazdo un estudio comparativo para estudiar el rendimie
 ## Estructura
 En la carpeta "algorithms" se hallan los ficheros donde se desarrollan los algoritmos anteriormente comentados. En la carpeta "arms" se halla el código para poder utilizar bandidos multibrazo con las distribuciones de recompensa normal, binomial y Bernoulli. Y en la carpeta "plotting" se halla el código para poder dibujar las gráficas utilizadas para la realización del estudio.
 ## Instalación y Uso
-[Instrucciones si son necesarias]
+No es necesaria realizar ninguna instalación para poder reproducir los experimentos, basta entrar en los ficheros Jupyter Notebook donde se hallan los experimentos y abrirlos en Colab. Todos los experimentos son reproducibles.
 ## Tecnologías Utilizadas
 Hemos desarrollado el código necesario para poder llevar a cabo los experimentos en ficheros .py de lenguaje Python. Los experimentos se han desarrollado en ficheros Jupyter Notebook
