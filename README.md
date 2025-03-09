@@ -10,7 +10,7 @@ En este trabajo se ha realiazdo un estudio comparativo para estudiar el rendimie
 ## Estructura
 En la carpeta "algorithms" se hallan los ficheros donde se desarrollan los algoritmos anteriormente comentados. En la carpeta "arms" se halla el código para poder utilizar bandidos multibrazo con las distribuciones de recompensa normal, binomial y Bernoulli. Y en la carpeta "plotting" se halla el código para poder dibujar las gráficas utilizadas para la realización del estudio.
 
-En la carpeta principal se hallan todos los ficheros Jupyter Notebook donde se han realizado los experimentos. El nombre de estos ficheros sigue la estructura "[familia del algoritmo]\_EML\_[distribución de recompensa utilizada].ipynb", donde [familia del algoritmo] hace referencia a la familia del algoritmo sobre la cual hemos realizado el experimento, siendo estas $\epsilon$-greedy, softmax, la cual incluye a los algoirtmos softmax y gradiente de preferencias; y UCB, que incluye los algoritmos UCB1 y UCB2. 
+En la carpeta principal se hallan todos los ficheros Jupyter Notebook donde se han realizado los experimentos. El nombre de estos ficheros sigue la estructura "[familia del algoritmo]\_EML\_[distribución de recompensa utilizada].ipynb", donde [familia del algoritmo] hace referencia a la familia del algoritmo sobre la cual hemos realizado el experimento, siendo estas _epsilongreedy_, _Softmax_, la cual incluye a los algoritmos softmax y gradiente de preferencias; y _UCB_, que incluye los algoritmos UCB1 y UCB2. 
 
 ## Instalación y Uso
 No es necesaria realizar ninguna instalación para poder reproducir los experimentos, basta entrar en los ficheros Jupyter Notebook donde se hallan los experimentos y abrirlos en Colab. Todos los experimentos son reproducibles.
